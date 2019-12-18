@@ -6,7 +6,7 @@ loggedinorreturn();
 parked();
 updatestate();
 global $CURUSER, $lang_jc_confirm;
-$bettopper = 10000;
+$bettopper = 1000000;
 
 if (!isset($_GET['subid'])) {
     stderr($lang_jc_confirm['wrong_head'], $lang_jc_confirm['not_exist'] . $lang_jc_confirm['click'] . "<a class=altlink href=\"jc_currentbet_L.php\">" . $lang_jc_confirm['here'] . "</a>" . $lang_jc_confirm['back1'], false);
