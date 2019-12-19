@@ -117,7 +117,7 @@ if ($action == "default") {
             $otheroption = "<b>" . $lang_mybonusapps ['text_to_be_play'] . "</b><input type=\"text\" name=\"luckbonus\" id=\"luckbonus\" style=\"width: 80px\" value=\"1000\" />" . $lang_mybonusapps ['text_karma_points'];
             print ("<td class=\"rowfollow\" align='left'><h1>" . $bonusarray ['name'] . "</h1>" . $bonusarray ['description'] . "</br></br>" . $otheroption . "</td><td class=\"rowfollow nowrap\" align='center'>" . $lang_mybonusapps ['text_min'] . "10<br />" . $lang_mybonusapps ['text_max'] . "1,000</td>");
         } elseif ($i == 2) { // 21周
-            print ("<td class=\"rowfollow\" align='left'><h1>" . $bonusarray ['name'] . "</h1>" . $bonusarray ['description'] . "<br /><br /></td><td class=\"rowfollow nowrap\" align='center'>每局100</td>");
+            print ("<td class=\"rowfollow\" align='left'><h1>" . $bonusarray ['name'] . "</h1>" . $bonusarray ['description'] . "<br /><br /></td><td class=\"rowfollow nowrap\" align='center'>每局1000</td>");
         } elseif ($i == 3) { // 幸运抽奖
             $otheroption = '';
             print ("<td class=\"rowfollow\" align='left'><h1>" . $bonusarray ['name'] . "</h1>" . $bonusarray ['description'] . "</br></br>" . $otheroption . "</td><td class=\"rowfollow nowrap\" align='center'>" . $lang_mybonusapps ['text_luckydraw_points'] . "</td>");

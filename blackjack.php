@@ -12,7 +12,7 @@ $HTMLOUT = '';
 if ($CURUSER['class'] < UC_USER)
     stderr("抱歉", "您的等级太低", false);
 
-$mb = 10000;
+$mb = 1000;
 $percent = 0.95;
 $required_ratio = 1;
 
