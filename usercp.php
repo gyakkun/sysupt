@@ -208,7 +208,7 @@ if ($action) {
                 tr_small($lang_usercp['row_country'], "<select name=country>\n$countries\n</select>", 1);
                 //School select
                 if ($showschool == 'yes') {
-                    $schools = "<option value=35>---- " . $lang_usercp['select_none_selected'] . " ----</option>n";
+                    $schools = "<option value=2>---- " . $lang_usercp['select_none_selected'] . " ----</option>n";
                     $sc_r = sql_query("SELECT id,name FROM schools ORDER BY CONVERT(name USING gbk) COLLATE gbk_chinese_ci ASC") or die;
                     while ($sc_a = mysql_fetch_array($sc_r))
                         $schools .= "<option value=$sc_a[id]" . ($sc_a['id'] == $CURUSER['school'] ? " selected" : "") . ">$sc_a[name]</option>n";
