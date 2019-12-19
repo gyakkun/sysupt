@@ -67,13 +67,13 @@ The following commands are used to setup production environment on a Debian 10.2
 
 ```bash
 # Install essential packages
-sudo apt -y install lsb-release apt-transport-https ca-certificates git build-essential curl gnupg2 gcc make autoconf libc-dev pkg-config zlib1g-dev libmemcached-dev
+sudo apt -y install lsb-release apt-transport-https ca-certificates git build-essential curl gnupg2 gcc make autoconf libc-dev pkg-config zlib1g-dev libmemcached-dev unzip
 
 # Install PHP 7.4
 sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
 echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list
 sudo apt update
-sudo apt install php7.4-{common,mysql,xml,xmlrpc,curl,gd,imagick,cli,dev,imap,mbstring,opcache,soap,zip,intl,bcmath,fpm} -y
+sudo apt install php-memcache php7.4-{common,mysql,xml,xmlrpc,curl,gd,imagick,cli,dev,imap,mbstring,opcache,soap,zip,intl,bcmath,fpm} -y
 
 # Install Composer
 EXPECTED_SIGNATURE="$(wget -q -O - https://composer.github.io/installer.sig)"
