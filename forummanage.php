@@ -163,7 +163,7 @@ if ($_GET['action'] == "editforum") {
 $res = sql_query ("SELECT sort FROM forums");
 $nr = mysql_num_rows($res);
             $maxclass = $nr + 1;
-          for ($i = 0; $i <= $maxclass; ++$i)
+          for ($i = 1; $i <= $maxclass; ++$i)
             print("<option value=$i" . ($row["sort"] == $i ? " selected" : "") . ">$i \n");
 ?>
         </select>
