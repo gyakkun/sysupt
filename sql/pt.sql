@@ -2634,7 +2634,7 @@ CREATE TABLE `users` (
   `showlastcom` enum('yes','no') DEFAULT 'no',
   `showlastpost` enum('yes','no') NOT NULL DEFAULT 'no',
   `pmnum` tinyint(3) UNSIGNED NOT NULL DEFAULT 10,
-  `school` smallint(5) UNSIGNED NOT NULL DEFAULT 35,
+  `school` smallint(5) UNSIGNED NOT NULL DEFAULT 2,
   `showfb` enum('yes','no') NOT NULL DEFAULT 'yes',
   `bjlosses` int(10) NOT NULL DEFAULT 0,
   `bjwins` int(10) NOT NULL DEFAULT 0,
