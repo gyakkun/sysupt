@@ -8,7 +8,7 @@ loggedinorreturn();
 parked();
 updatestate();
 global $bettopper;
-$bettopper = 10000;
+$bettopper = 1000000;
 function bark($msg)
 {
     global $lang_jc_bet;
