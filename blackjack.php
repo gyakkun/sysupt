@@ -12,8 +12,8 @@ $HTMLOUT = '';
 if ($CURUSER['class'] < UC_USER)
     stderr("抱歉", "您的等级太低", false);
 
-$mb = 100;
-$percent = 0.9;
+$mb = 10000;
+$percent = 0.95;
 $required_ratio = 1;
 
 $now = sqlesc(date("Y-m-d H:i:s"));
@@ -67,7 +67,7 @@ if ($game) {
             elseif ($CURUSER["uploaded"] > 0)
                 $ratio = 999;
             else
-                $ratio = 0;
+                $ratio = 1;
             if ($ratio < $required_ratio)
                 stderr("抱歉 " . $CURUSER["username"], "您的分享率小于 " . $required_ratio . " .", false);
             $res = sql_query("SELECT status, gameover FROM blackjack WHERE userid = " . sqlesc($CURUSER['id']));
