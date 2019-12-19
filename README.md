@@ -93,6 +93,7 @@ sudo mv composer.phar /usr/local/bin/composer
 
 # Install nginx 1.17.6
 echo "deb http://nginx.org/packages/mainline/debian `lsb_release -cs` nginx"     | sudo tee /etc/apt/sources.list.d/nginx.list
+curl -fsSL https://nginx.org/keys/nginx_signing.key | sudo apt-key add -
 sudo apt update
 sudo apt install nginx
 
