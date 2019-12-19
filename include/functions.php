@@ -247,11 +247,11 @@ function formatUrl($url, $newWindow = false, $text = '', $linkClass = '')
             $text = $url;
         }
         $url_host = strtolower(parse_url($url, PHP_URL_HOST));
-        $host_whitelist = ['www.tjupt.org', 'tjupt.org', NULL];
+        $host_whitelist = ['www.21weeks.icu', '21weeks.icu', NULL];
         if (!in_array($url_host, $host_whitelist)) {
             return addTempCode("<a" . ($linkClass ? " class=\"$linkClass\"" : '') . " href=\"$url\"" . ($newWindow == true ? " target=\"_blank\"" : "") . ">站外链接 :: $text</a>");
         }
-        $url = preg_replace('/(https?:\/\/)?(www.)?tjupt.org\//i', '', $url);
+        $url = preg_replace('/(https?:\/\/)?(www.)?21weeks.icu\//i', '', $url);
         return addTempCode("<a" . ($linkClass ? " class=\"$linkClass\"" : '') . " href=\"$url\"" . ($newWindow == true ? " target=\"_blank\"" : "") . ">$text</a>");
     }
 }
@@ -5638,7 +5638,7 @@ function jc_usercpmenu($selected = "current_bet")
 <script type="text/javascript">
     function zOpenInner2(){
         var content = "<font color=red><h1>竞猜系统说明</h1></font><br/>";
-        content = content + "<font color=white>1）竞猜系统面向全站用户，任何用户都可以提交竞猜候选。<br/><br/>2）竞猜类别有足球、篮球、网球、乒乓球和其他5个类别。<br/><br/>3）竞猜投注下限由发布者决定，上限暂定10000魔力值。<br/><br/>4）一次竞猜中每人只能投一个选项，如果所有参与竞猜者都没有投注正确答案，投注金额也不会返还。<br/><br/>5 ）竞猜中获胜会与其他胜者按投注比例分红，失败者失去全部投注魔力值。<br/><br/>6）发布竞猜者将根据参与竞猜人数和投注金额得到奖励。<br/><br/>7)  如有其它不明白之处，或者对竞猜结果有异议，请联系管理员（站内）。<br/><br/>【声明】该细则解释权归SYSUPT管理组，有任何问题请<a href=\"sendmessage.php?receiver=31029\" class=\"altlink\" target=\"_blank\">联系管理员</a></font>";
+        content = content + "<font color=white>1）竞猜系统面向全站用户，任何用户都可以提交竞猜候选。<br/><br/>2）竞猜类别有足球、篮球、网球、乒乓球和其他5个类别。<br/><br/>3）竞猜投注下限由发布者决定，上限暂定100000魔力值。<br/><br/>4）一次竞猜中每人只能投一个选项，如果所有参与竞猜者都没有投注正确答案，投注金额也不会返还。<br/><br/>5 ）竞猜中获胜会与其他胜者按投注比例分红，失败者失去全部投注魔力值。<br/><br/>6）发布竞猜者将根据参与竞猜人数和投注金额得到奖励。<br/><br/>7)  如有其它不明白之处，或者对竞猜结果有异议，请联系管理员（站内）。<br/><br/>【声明】该细则解释权归SYSUPT管理组，有任何问题请<a href=\"sendmessage.php?receiver=31029\" class=\"altlink\" target=\"_blank\">联系管理员</a></font>";
         $('#lightbox').css({"zoom":"100%"});
         $('#lightbox').html(content);
         $('#curtain').fadeIn();

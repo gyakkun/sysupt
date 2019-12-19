@@ -12,7 +12,7 @@ dbconn();
 loggedinorreturn();
 $ref = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
 
-if (!in_array($ref, array('www.tjupt.org', 'tjupt.org'))) {
+if (!in_array($ref, array('www.21weeks.icu', '21weeks.icu'))) {
     stderr("错误", "页面打开的方式不正确");
 }
 
