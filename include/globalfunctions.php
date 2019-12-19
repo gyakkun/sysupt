@@ -124,7 +124,7 @@ function sql_multi_query($query)
 function sqlesc($value)
 {
     // Quote if not a number or a numeric string
-    if (!is_numeric($value) || $value[0] == '0' || $value[0] == '+') {
+    if (!is_numeric($value) || $value[0] == '+') {
         $value = "'" . mysql_real_escape_string($value) . "'";
     }
     return $value;
