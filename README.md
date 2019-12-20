@@ -67,7 +67,7 @@ The following commands are used to setup production environment on a Debian 10.2
 
 ```bash
 # Install essential packages
-sudo apt -y install lsb-release apt-transport-https ca-certificates git build-essential curl gnupg2 gcc make autoconf libc-dev pkg-config zlib1g-dev libmemcached-dev unzip
+sudo apt -y install lsb-release apt-transport-https ca-certificates git build-essential curl gnupg2 gcc make autoconf libc-dev pkg-config zlib1g-dev libmemcached-dev unzip memcached
 
 # Install PHP 7.4
 sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
