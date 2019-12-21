@@ -141,16 +141,16 @@ $dict['info']['private'] = 1;
 // Remove un-need field in the torrent
 if ($dict['created by'] == "hdchina.org") {
     $dict['created by'] = "[$BASEURL]";
-    $dict['comment'] = "Torrent From SYSUPT";
+    $dict['comment'] = "Torrent From SYSPT";
 }
 if ($dict['created by'] == "http://cgbt.org") {
     $dict['created by'] = "[$BASEURL]";
-    $dict['comment'] = "Torrent From SYSUPT";
+    $dict['comment'] = "Torrent From SYSPT";
 }
 if (isset ($dict['info']['ttg_tag'])) {
     unset ($dict['info']['ttg_tag']);
     $dict['created by'] = "[$BASEURL]";
-    $dict['comment'] = "Torrent From SYSUPT";
+    $dict['comment'] = "Torrent From SYSPT";
 }
 // The following line requires uploader to re-download torrents after uploading
 // even the torrent is set as private and with uploader's passkey in it.

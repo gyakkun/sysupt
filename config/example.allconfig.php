@@ -151,7 +151,7 @@ $AUTHORITY=array(
 );
 $BASIC=array(
     // todo: edit this all
-    'SITENAME' => 'SYSUPT',
+    'SITENAME' => 'SYSPT',
     'BASEURL' => 'SITE_BASE_URL',
     'announce_url' => 'TRACKER_URL/announce.php',
     'multi_tracker_behaviour' => 'separate',
@@ -275,7 +275,7 @@ $MAIN=array(
     'specialcat' => NULL,
     'waitsystem' => 'no',
     'bitbucket' => 'bitbucket',
-    'torrentnameprefix' => '[SYSUPT]',
+    'torrentnameprefix' => '[SYSPT]',
     'showforumstats' => 'yes',
     'verification' => 'email',
     'invite_count' => '0',
@@ -354,7 +354,7 @@ $TWEAK=array(
     'enablelocation' => 'no',
     'titlekeywords' => '',
     'metakeywords' => 'PT 校园 资源',
-    'metadescription' => 'SYSUPT',
+    'metadescription' => 'SYSPT',
     'enablesqldebug' => 'yes',
     'sqldebug' => '15',
     'cssdate' => '',

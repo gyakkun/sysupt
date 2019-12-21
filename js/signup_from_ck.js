@@ -2,7 +2,7 @@
  * Ajax用户注册验证 JS
  * $Author: Sunday & luck $
  * Download from the Internet 
- * Edit for SYSUPT
+ * Edit for SYSPT
  * $Date: 2013-03-16 11:15:00 +0800  $
 */
 
