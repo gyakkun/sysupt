@@ -766,6 +766,31 @@ INSERT INTO `downloadspeed` (`id`, `name`) VALUES
 (19, '1000Mbps');
 
 --
+-- 转存表中的数据 `downloadspeed`
+--
+
+INSERT INTO `uploadspeed` (`id`, `name`) VALUES
+(1, '64kbps'),
+(2, '128kbps'),
+(3, '256kbps'),
+(4, '512kbps'),
+(5, '768kbps'),
+(6, '1Mbps'),
+(7, '1.5Mbps'),
+(8, '2Mbps'),
+(9, '3Mbps'),
+(10, '4Mbps'),
+(11, '5Mbps'),
+(12, '6Mbps'),
+(13, '7Mbps'),
+(14, '8Mbps'),
+(15, '9Mbps'),
+(16, '10Mbps'),
+(17, '48Mbps'),
+(18, '100Mbps'),
+(19, '1000Mbps');
+
+--
 -- 转存表中的数据 `faq`
 --
 
@@ -1397,9 +1422,9 @@ INSERT INTO `ipv6school` (`id`, `ipv6`, `school`) VALUES
 --
 
 INSERT INTO `isp` (`id`, `name`) VALUES
-(1, '中国电信（非天津）'),
-(2, '中国联通（非天津）'),
-(3, '中国移动（非天津）'),
+(1, '中国电信'),
+(2, '中国联通'),
+(3, '中国移动'),
 (14, '天津电信有线接入'),
 (15, '天津联通'),
 (6, '天津大学校园宽带'),
