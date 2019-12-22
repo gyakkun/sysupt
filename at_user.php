@@ -108,7 +108,7 @@ if (isset ($_POST ['str']) && $_POST ['str'] != '') {
                     /*
                 case UC_FORUM_MODERATOR :
                     {
-                        $class_name = '论坛版主';
+                        $class_name = 'Forum Moderator';
                         break;
                     }
                     */

@@ -36,9 +36,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!is_numeric($point)) stderr("别玩了！", "填写的魔力值不是正常的数值！");
         if ($point <= 0) stderr("别玩了！", "工资怎么会是负数呢？");
         $dt = sqlesc(date("Y-m-d H:i:s"));
-        if ($class == "forummods")//论坛版主
+        if ($class == "forummods")//Forum Moderator
         {
-            $classname = "论坛版主";
+            $classname = "Forum Moderator";
             $query1 = sql_query("SELECT userid FROM forummods GROUP by userid");
             while ($dat = mysql_fetch_assoc($query1)) {
                 sql_query("UPDATE users SET seedbonus = seedbonus + $point WHERE id=$dat[userid] AND class < 12");
@@ -172,7 +172,7 @@ if (get_user_class() >= 14) {
 <form action=\"amountbonus.php\" method=\"post\" >
 <table width=100% border=1 cellspacing=0 cellpadding=5>
 <tr><td class=\"rowfollow\" width=\"100%\">
-给<select name=\"class\"><option value=\"all\">所有用户<option value=10>贵宾</option><option value=11>养老族</option><option value=12>上传员</option><option value=13 selected=\"selected\">类管理员</option><option value=14>管理员</option><option value=15>维护开发员</option><option value=16>主管</option><option value=\"forummods\">论坛版主</option><option value=\"designer\">美工</option><option value=\"support\">客服</option></select>等级用户增加<input name = \"amount\" value=\"5000\" size=\"8\"/>个魔力值
+给<select name=\"class\"><option value=\"all\">所有用户<option value=10>贵宾</option><option value=11>养老族</option><option value=12>上传员</option><option value=13 selected=\"selected\">类管理员</option><option value=14>管理员</option><option value=15>维护开发员</option><option value=16>主管</option><option value=\"forummods\">Forum Moderator</option><option value=\"designer\">美工</option><option value=\"support\">客服</option></select>等级用户增加<input name = \"amount\" value=\"5000\" size=\"8\"/>个魔力值
 <br /><br /></td></tr>
 <tr><td class=\"toolbox\" align=\"center\"><input type = \"hidden\" name = \"wage\" value = \"yes\" />
 <input type=\"submit\" class=\"btn\" value=\"确定\" />
