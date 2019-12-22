@@ -85,31 +85,7 @@ echo $Cache->next_row();
 </tr>
 </table>
 <?php
-// ------------- start: shoutbox ------------------//
-if ($showshoutbox_main == "yes") {
-    ?>
-    <h2><?php echo $lang_index['text_shoutbox'] ?> - <font
-                class="small"><?php echo $lang_index['text_auto_refresh_after'] ?></font><font
-                class='striking' id="countdown"></font><font
-                class="small"><?php echo $lang_index['text_seconds'] ?></font>
-    </h2>
-    <?php
-    print ("<table width=\"100%\"><tr><td class=\"text\" align=\"center\">\n");
-    print ("<iframe src='shoutbox.php?type=shoutbox' width='95%' height='360' frameborder='0' name='sbox' marginwidth='0' marginheight='0'></iframe><br /><br />\n");
-    print ("<form action='shoutbox.php' method='post' target='sbox' name='shbox'>\n");
-    print ("<label for='shbox_text'>" . $lang_index ['text_message'] . "</label>");
-    smile_table('shbox_text');
-    print ("<input type='text' autocomplete='off' name='shbox_text' id='shbox_text' size='100' width=\"70%\" style='border: 1px solid gray;' /><input type='submit' id='hbsubmit' class='btn' name='shout' value=\"" . $lang_index ['sumbit_shout'] . "\" onclick=\"return clear(shbox);\" />");
-// 	if ($CURUSER ['hidehb'] != 'yes' && $showhelpbox_main == 'yes')
-// 		print ("<input type='submit' class='btn' name='toguest' value=\"" . $lang_index ['sumbit_to_guest'] . "\" />") ;
-    print ("<input type='reset' class='btn' value=\"" . $lang_index ['submit_clear'] . "\" /> <input type='hidden' name='sent' value='yes' /><input type='hidden' name='type' value='shoutbox' /><br />\n");
-    print (smile_row("shbox", "shbox_text"));
-    print('<link rel="stylesheet" href="styles/userAutoTips.css" type="text/css" media="screen" />');
-    print ('<script type="text/javascript" src="js/userAutoTips.js"></script>');
-    print ('<script type="text/javascript">userAutoTips({id:"shbox_text"});</script>');
-    print ("</form></td></tr></table>");
-}
-// ------------- end: shoutbox ------------------//
+
 
 // ------------- start: latest torrents ------------------//
 
@@ -208,6 +184,75 @@ if ($showextinfo ['imdb'] == 'yes' && ($showmovies ['hot'] == "yes" || $showmovi
  * }
  */
 // ------------- end: latest forum posts ------------------//
+
+// ------------- start: funbox ------------------//
+if ($showfunbox_main == "yes" && (!isset ($CURUSER) || $CURUSER ['showfb'] == "yes")) {
+    // Get the newest fun stuff
+    if (!$row = $Cache->get_value('current_fun_content')) {
+        $result = sql_query("SELECT fun.*, IF(ADDTIME(added, '1 0:0:0') < NOW(),true,false) AS neednew FROM fun WHERE status != 'banned' AND status != 'dull' ORDER BY added DESC LIMIT 1") or sqlerr(__FILE__, __LINE__);
+        $row = mysql_fetch_array($result);
+        $Cache->cache_value('current_fun_content', $row, 1043);
+    }
+    if (!$row)    // There is no funbox item
+    {
+        print ("<h2>" . $lang_index ['text_funbox'] . (get_user_class() >= $newfunitem_class ? "<font class=\"small\"> - [<a class=\"altlink\" href=\"fun.php?action=new\"><b>" . $lang_index ['text_new_fun'] . "</b></a>]</font>" : "") . "</h2>");
+    } else {
+        $totalvote = $Cache->get_value('current_fun_vote_count');
+        if ($totalvote == "") {
+            $totalvote = get_row_count("funvotes", "WHERE funid = " . sqlesc($row ['id']));
+            $Cache->cache_value('current_fun_vote_count', $totalvote, 756);
+        }
+        $funvote = $Cache->get_value('current_fun_vote_funny_count');
+        if ($funvote == "") {
+            $funvote = get_row_count("funvotes", "WHERE funid = " . sqlesc($row ['id']) . " AND vote='fun'");
+            $Cache->cache_value('current_fun_vote_funny_count', $funvote, 756);
+        }
+        // check whether current user has voted
+        $funvoted = get_row_count("funvotes", "WHERE funid = " . sqlesc($row ['id']) . " AND userid=" . sqlesc($CURUSER ['id']));
+
+        print ("<h2>" . $lang_index ['text_funbox']);
+        if ($CURUSER) {
+            print ("<font class=\"small\">" . (get_user_class() >= $log_class ? " - [<a class=\"altlink\" href=\"log.php?action=funbox\"><b>" . $lang_index ['text_more_fun'] . "</b></a>]" : "") . ($row ['neednew'] && get_user_class() >= $newfunitem_class ? " - [<a class=altlink href=\"fun.php?action=new\"><b>" . $lang_index ['text_new_fun'] . "</b></a>]" : "") . (($CURUSER ['id'] == $row ['userid'] || get_user_class() >= $funmanage_class) ? " - [<a class=\"altlink\" href=\"fun.php?action=edit&amp;id=" . $row ['id'] . "&amp;returnto=index.php\"><b>" . $lang_index ['text_edit'] . "</b></a>]" : "") . (get_user_class() >= $funmanage_class ? " - [<a class=\"altlink\" href=\"fun.php?action=delete&amp;id=" . $row ['id'] . "&amp;returnto=index.php\"><b>" . $lang_index ['text_delete'] . "</b></a>] - [<a class=\"altlink\" href=\"fun.php?action=ban&amp;id=" . $row ['id'] . "&amp;returnto=index.php\"><b>" . $lang_index ['text_ban'] . "</b></a>]" : "") . " - [<a class=\"altlink\" href=\"fun.php\"><b>查看</b></a>]</font>");
+        }
+        print ("</h2>");
+
+        print ("<table width=\"100%\"><tr><td class=\"text\" align=\"center\">");
+        print ("<iframe src=\"fun.php?action=view\" width='95%' height='600' frameborder='0' name='funbox' marginwidth='0' marginheight='0'></iframe><br /><br />\n");
+
+        if ($CURUSER) {
+            $funonclick = " onclick=\"funvote(" . $row ['id'] . ",'fun'" . ")\"";
+            $dullonclick = " onclick=\"funvote(" . $row ['id'] . ",'dull'" . ")\"";
+            print ("<span id=\"funvote\"><b>" . $funvote . "</b>" . $lang_index ['text_out_of'] . $totalvote . $lang_index ['text_people_found_it'] . ($funvoted ? "" : "<font class=\"striking\">" . $lang_index ['text_your_opinion'] . "</font>&nbsp;&nbsp;<input type=\"button\" class='btn' name='fun' id='fun' " . $funonclick . " value=\"" . $lang_index ['submit_fun'] . "\" />&nbsp;<input type=\"button\" class='btn' name='dull' id='dull' " . $dullonclick . " value=\"" . $lang_index ['submit_dull'] . "\" />") . "</span><span id=\"voteaccept\" style=\"display: none;\">" . $lang_index ['text_vote_accepted'] . "</span>");
+        }
+        print ("</td></tr></table>");
+    }
+}
+// ------------- end: funbox ------------------//
+// ------------- start: shoutbox ------------------//
+if ($showshoutbox_main == "yes") {
+    ?>
+    <h2><?php echo $lang_index['text_shoutbox'] ?> - <font
+                class="small"><?php echo $lang_index['text_auto_refresh_after'] ?></font><font
+                class='striking' id="countdown"></font><font
+                class="small"><?php echo $lang_index['text_seconds'] ?></font>
+    </h2>
+    <?php
+    print ("<table width=\"100%\"><tr><td class=\"text\" align=\"center\">\n");
+    print ("<iframe src='shoutbox.php?type=shoutbox' width='95%' height='360' frameborder='0' name='sbox' marginwidth='0' marginheight='0'></iframe><br /><br />\n");
+    print ("<form action='shoutbox.php' method='post' target='sbox' name='shbox'>\n");
+    print ("<label for='shbox_text'>" . $lang_index ['text_message'] . "</label>");
+    smile_table('shbox_text');
+    print ("<input type='text' autocomplete='off' name='shbox_text' id='shbox_text' size='100' width=\"70%\" style='border: 1px solid gray;' /><input type='submit' id='hbsubmit' class='btn' name='shout' value=\"" . $lang_index ['sumbit_shout'] . "\" onclick=\"return clear(shbox);\" />");
+// 	if ($CURUSER ['hidehb'] != 'yes' && $showhelpbox_main == 'yes')
+// 		print ("<input type='submit' class='btn' name='toguest' value=\"" . $lang_index ['sumbit_to_guest'] . "\" />") ;
+    print ("<input type='reset' class='btn' value=\"" . $lang_index ['submit_clear'] . "\" /> <input type='hidden' name='sent' value='yes' /><input type='hidden' name='type' value='shoutbox' /><br />\n");
+    print (smile_row("shbox", "shbox_text"));
+    print('<link rel="stylesheet" href="styles/userAutoTips.css" type="text/css" media="screen" />');
+    print ('<script type="text/javascript" src="js/userAutoTips.js"></script>');
+    print ('<script type="text/javascript">userAutoTips({id:"shbox_text"});</script>');
+    print ("</form></td></tr></table>");
+}
+// ------------- end: shoutbox ------------------//
 // ------------- start: polls ------------------//
 if ($CURUSER && $showpolls_main == "yes") {
     // Get current poll
@@ -393,49 +438,6 @@ if ($CURUSER && $showpolls_main == "yes") {
     }
 }
 // ------------- end: polls ------------------//
-// ------------- start: funbox ------------------//
-if ($showfunbox_main == "yes" && (!isset ($CURUSER) || $CURUSER ['showfb'] == "yes")) {
-    // Get the newest fun stuff
-    if (!$row = $Cache->get_value('current_fun_content')) {
-        $result = sql_query("SELECT fun.*, IF(ADDTIME(added, '1 0:0:0') < NOW(),true,false) AS neednew FROM fun WHERE status != 'banned' AND status != 'dull' ORDER BY added DESC LIMIT 1") or sqlerr(__FILE__, __LINE__);
-        $row = mysql_fetch_array($result);
-        $Cache->cache_value('current_fun_content', $row, 1043);
-    }
-    if (!$row)    // There is no funbox item
-    {
-        print ("<h2>" . $lang_index ['text_funbox'] . (get_user_class() >= $newfunitem_class ? "<font class=\"small\"> - [<a class=\"altlink\" href=\"fun.php?action=new\"><b>" . $lang_index ['text_new_fun'] . "</b></a>]</font>" : "") . "</h2>");
-    } else {
-        $totalvote = $Cache->get_value('current_fun_vote_count');
-        if ($totalvote == "") {
-            $totalvote = get_row_count("funvotes", "WHERE funid = " . sqlesc($row ['id']));
-            $Cache->cache_value('current_fun_vote_count', $totalvote, 756);
-        }
-        $funvote = $Cache->get_value('current_fun_vote_funny_count');
-        if ($funvote == "") {
-            $funvote = get_row_count("funvotes", "WHERE funid = " . sqlesc($row ['id']) . " AND vote='fun'");
-            $Cache->cache_value('current_fun_vote_funny_count', $funvote, 756);
-        }
-        // check whether current user has voted
-        $funvoted = get_row_count("funvotes", "WHERE funid = " . sqlesc($row ['id']) . " AND userid=" . sqlesc($CURUSER ['id']));
-
-        print ("<h2>" . $lang_index ['text_funbox']);
-        if ($CURUSER) {
-            print ("<font class=\"small\">" . (get_user_class() >= $log_class ? " - [<a class=\"altlink\" href=\"log.php?action=funbox\"><b>" . $lang_index ['text_more_fun'] . "</b></a>]" : "") . ($row ['neednew'] && get_user_class() >= $newfunitem_class ? " - [<a class=altlink href=\"fun.php?action=new\"><b>" . $lang_index ['text_new_fun'] . "</b></a>]" : "") . (($CURUSER ['id'] == $row ['userid'] || get_user_class() >= $funmanage_class) ? " - [<a class=\"altlink\" href=\"fun.php?action=edit&amp;id=" . $row ['id'] . "&amp;returnto=index.php\"><b>" . $lang_index ['text_edit'] . "</b></a>]" : "") . (get_user_class() >= $funmanage_class ? " - [<a class=\"altlink\" href=\"fun.php?action=delete&amp;id=" . $row ['id'] . "&amp;returnto=index.php\"><b>" . $lang_index ['text_delete'] . "</b></a>] - [<a class=\"altlink\" href=\"fun.php?action=ban&amp;id=" . $row ['id'] . "&amp;returnto=index.php\"><b>" . $lang_index ['text_ban'] . "</b></a>]" : "") . " - [<a class=\"altlink\" href=\"fun.php\"><b>查看</b></a>]</font>");
-        }
-        print ("</h2>");
-
-        print ("<table width=\"100%\"><tr><td class=\"text\" align=\"center\">");
-        print ("<iframe src=\"fun.php?action=view\" width='95%' height='600' frameborder='0' name='funbox' marginwidth='0' marginheight='0'></iframe><br /><br />\n");
-
-        if ($CURUSER) {
-            $funonclick = " onclick=\"funvote(" . $row ['id'] . ",'fun'" . ")\"";
-            $dullonclick = " onclick=\"funvote(" . $row ['id'] . ",'dull'" . ")\"";
-            print ("<span id=\"funvote\"><b>" . $funvote . "</b>" . $lang_index ['text_out_of'] . $totalvote . $lang_index ['text_people_found_it'] . ($funvoted ? "" : "<font class=\"striking\">" . $lang_index ['text_your_opinion'] . "</font>&nbsp;&nbsp;<input type=\"button\" class='btn' name='fun' id='fun' " . $funonclick . " value=\"" . $lang_index ['submit_fun'] . "\" />&nbsp;<input type=\"button\" class='btn' name='dull' id='dull' " . $dullonclick . " value=\"" . $lang_index ['submit_dull'] . "\" />") . "</span><span id=\"voteaccept\" style=\"display: none;\">" . $lang_index ['text_vote_accepted'] . "</span>");
-        }
-        print ("</td></tr></table>");
-    }
-}
-// ------------- end: funbox ------------------//
 // ------------- start: stats ------------------//
 if ($showstats_main == "yes") {
     ?>
