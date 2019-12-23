@@ -124,7 +124,7 @@ $s .= "\n</select>";
                                             class=small><?php echo($restrictemaildomain == 'yes' ? $lang_signup['text_email_note'] . allowedemails() : "") ?>
                                 </td>
                             </tr>
-                            </font></br>请使用您的<b>常用邮箱</b>。如果收不到验证邮件请查看垃圾箱或邮件网关拦截记录。</td></tr></table>
+                            </font></br>请使用您的<b>校园邮箱</b>注册。如果收不到验证邮件请查看垃圾箱或邮件网关拦截记录。</td></tr></table>
                     </td>
                 </tr>
                 <?php $countries = "<option value=\"8\">---- " . $lang_signup['select_none_selected'] . " ----</option>n";

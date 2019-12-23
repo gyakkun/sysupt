@@ -94,6 +94,9 @@ if (!empty($_GET["returnto"])) {
                 </td>
             </tr>
             <tr>
+                <td class="toolbox" colspan="2" align="left">没有账户？<a href="/signup.php">点这里注册一个</a></td>
+            </tr>
+            <tr>
                 <td class="toolbox" colspan="2" align="right"><input type="submit"
                                                                      value="<?php echo $lang_login['button_login'] ?>"
                                                                      class="btn"/>
