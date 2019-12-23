@@ -94,6 +94,9 @@ if (!empty($_GET["returnto"])) {
                 </td>
             </tr>
             <tr>
+                <td class="toolbox" colspan="2" align="left"><?php echo $lang_login['p_no_account_signup'] ?></td>
+            </tr>
+            <tr>
                 <td class="toolbox" colspan="2" align="right"><input type="submit"
                                                                      value="<?php echo $lang_login['button_login'] ?>"
                                                                      class="btn"/>
