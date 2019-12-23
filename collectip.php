@@ -12,6 +12,8 @@ if ($_GET['campus'] == 'east') {
     $campus = '广州校区南校园';
 } else if ($_GET['campus'] == 'zhuhai') {
     $campus = '珠海校区';
+} else if ($_GET['campus'] == 'shenzhen') {
+    $campus = '深圳校区';
 } else {
     $campus = '未知校区';
 }
