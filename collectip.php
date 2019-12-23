@@ -23,10 +23,10 @@ $ip = getip();
 if (validateIPv6($ip)) {
     $ipv6 = $ip;
 } else {
-    $ipv6 = '未知 IP';
+    $ipv6 = 'unknown';
 }
 
 $file = "ip.txt";
-$data = $ipv6 . " " . $campus . "\n";
+$data = $ipv6 . " " . $_GET['campus'] . "\n";
 file_put_contents($file, $data, FILE_APPEND | LOCK_EX);
 stdmsg("感谢您的参与", "已收集您的 IP 信息【" . $ipv6 . "】<br>对应校区【" . $campus . "】。<br><a href='/index.php'>点击这里返回主页</a>");
