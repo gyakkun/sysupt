@@ -120,12 +120,12 @@ if (!$Cache->get_page()) {
     $HTMLOUT .= "<br /><br />";
 //==Highest Win %
 //==Most Credit Won
-    $res = sql_query("SELECT id, username, bjwins AS wins, bjlosses AS losses, bjwins + bjlosses AS games, 0.9*bjwins - bjlosses AS winnings FROM users WHERE bjwins + bjlosses >= $mingames ORDER BY winnings DESC LIMIT 20") or sqlerr(__FILE__, __LINE__);
+    $res = sql_query("SELECT id, username, bjwins AS wins, bjlosses AS losses, bjwins + bjlosses AS games, 0.95*bjwins - bjlosses AS winnings FROM users WHERE bjwins + bjlosses >= $mingames ORDER BY winnings DESC LIMIT 20") or sqlerr(__FILE__, __LINE__);
     $HTMLOUT .= bjtable($res, "赢家排名");
     $HTMLOUT .= "<br /><br />";
 //==Most Credit Won
 //==Most Credit Lost
-    $res = sql_query("SELECT id, username, bjwins AS wins, bjlosses AS losses, bjwins + bjlosses AS games, bjlosses - 0.9*bjwins AS losings FROM users WHERE bjwins + bjlosses >= $mingames ORDER BY losings DESC LIMIT 20") or sqlerr(__FILE__, __LINE__);
+    $res = sql_query("SELECT id, username, bjwins AS wins, bjlosses AS losses, bjwins + bjlosses AS games, bjlosses - 0.95*bjwins AS losings FROM users WHERE bjwins + bjlosses >= $mingames ORDER BY losings DESC LIMIT 20") or sqlerr(__FILE__, __LINE__);
     $HTMLOUT .= bjtable($res, "输家排名");
 //==Most Credit Lost
     $HTMLOUT .= "<br /><b><div align=\"center\"><a href=\"blackjack.php\">返回游戏</a></div></b>";
