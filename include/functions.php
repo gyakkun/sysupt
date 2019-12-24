@@ -1818,7 +1818,7 @@ function sent_mail($to, $fromname, $fromemail, $subject, $body, $type = "confirm
         $mail->mime_content_transfer_encoding();
         $mail->mime_charset('text/html', $hdr_encoding);
         $mail->subject($subject);
-        $mail->body($body);
+        $mail->body("<html>" . $body . "</html>");
         $mail->send();
         $mail->close();
     }

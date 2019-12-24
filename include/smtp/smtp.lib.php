@@ -472,7 +472,7 @@ class smtp
 		$body = preg_replace("/([\n|\r])\.([\n|\r])/", "$1..$2", $body);
 		
 		if($this->_CTEncoding == 'base64')
-			$this->_body = sprintf("\r\n%s", base64_encode($body));
+			$this->_body = sprintf("\r\n%s", chunk_split(base64_encode($body)));
 	}
 
 
