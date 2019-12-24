@@ -48,6 +48,8 @@ function end_frame2()
 
 function bjtable($res, $frame_caption)
 {
+    $percent = 0.95;
+    $mb = 1000;
     $htmlout = '';
     $htmlout .= begin_frame2($frame_caption, true);
     $htmlout .= begin_table2();
@@ -67,13 +69,16 @@ function bjtable($res, $frame_caption)
         //==Calculate Win %
         $win_perc = number_format(($a['wins'] / $a['games']) * 100, 1);
         //==Add a user's +/- statistic
-        $plus_minus = 0.9 * $a['wins'] - $a['losses'];
-        if ($plus_minus >= 0) {
-            $plus_minus = (0.9 * $a['wins'] - $a['losses']) * 100;
-        } else {
-            $plus_minus = "-";
-            $plus_minus .= ($a['losses'] - 0.9 * $a['wins']) * 100;
-        }
+        // hape codes
+        // $plus_minus = 0.9 * $a['wins'] - $a['losses'];
+        // if ($plus_minus >= 0) {
+        //     $plus_minus = (0.9 * $a['wins'] - $a['losses']) * 100;
+        // } else {
+        //     $plus_minus = "-";
+        //     $plus_minus .= ($a['losses'] - 0.9 * $a['wins']) * 100;
+        // }
+        $plus_minus = ($percent * $a['wins'] - $a['losses'] < 0 ? '-' : '') . (($percent * $a['wins'] - $a['losses'] >= 0 ? ($percent * $a['wins'] - $a['losses']) : ($a['losses'] - $percent * $a['wins']))) * $mb;
+
 
         $htmlout .= "<tr><td>$num</td><td align='left'>" .
             "<b><a href='userdetails.php?id=" . $a['id'] . "'>" . get_username($a["id"]) . "</a></b></td>" .
@@ -97,7 +102,7 @@ $Cache->new_page('bjstats', $cachetime, true);
 if (!$Cache->get_page()) {
     $Cache->add_whole_row();
 
-    $mingames = 100;
+    $mingames = 10;
     $HTMLOUT = '';
     $HTMLOUT .= "<h1>21周游戏排行榜</h1>";
     $arr = mysql_fetch_assoc(sql_query("SELECT sum(bjwins + bjlosses) AS games FROM users WHERE 1 ")) or sqlerr(__FILE__, __LINE__);
@@ -115,12 +120,12 @@ if (!$Cache->get_page()) {
     $HTMLOUT .= "<br /><br />";
 //==Highest Win %
 //==Most Credit Won
-    $res = sql_query("SELECT id, username, bjwins AS wins, bjlosses AS losses, bjwins + bjlosses AS games, 0.9*bjwins - bjlosses AS winnings FROM users WHERE bjwins + bjlosses >= $mingames ORDER BY winnings DESC LIMIT 20") or sqlerr(__FILE__, __LINE__);
+    $res = sql_query("SELECT id, username, bjwins AS wins, bjlosses AS losses, bjwins + bjlosses AS games, 0.95*bjwins - bjlosses AS winnings FROM users WHERE bjwins + bjlosses >= $mingames ORDER BY winnings DESC LIMIT 20") or sqlerr(__FILE__, __LINE__);
     $HTMLOUT .= bjtable($res, "赢家排名");
     $HTMLOUT .= "<br /><br />";
 //==Most Credit Won
 //==Most Credit Lost
-    $res = sql_query("SELECT id, username, bjwins AS wins, bjlosses AS losses, bjwins + bjlosses AS games, bjlosses - 0.9*bjwins AS losings FROM users WHERE bjwins + bjlosses >= $mingames ORDER BY losings DESC LIMIT 20") or sqlerr(__FILE__, __LINE__);
+    $res = sql_query("SELECT id, username, bjwins AS wins, bjlosses AS losses, bjwins + bjlosses AS games, bjlosses - 0.95*bjwins AS losings FROM users WHERE bjwins + bjlosses >= $mingames ORDER BY losings DESC LIMIT 20") or sqlerr(__FILE__, __LINE__);
     $HTMLOUT .= bjtable($res, "输家排名");
 //==Most Credit Lost
     $HTMLOUT .= "<br /><b><div align=\"center\"><a href=\"blackjack.php\">返回游戏</a></div></b>";
